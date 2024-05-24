@@ -1,0 +1,35 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3 class="text-uppercase"> Editar una persona </h3>
+                </div>
+                <div class="card-body">
+                    <form action="/edit/{{persona.id}}" method="post">
+
+                        <div class="input-group mt-2">
+                            <label for="firstname" class="input-group-text">Nombre Persona</label>
+                            <input class="form-control" type="text" name="firstname" id="firstname" placeholder="Ejemplo: Juan Felipe" value="{{persona.firstname}}" autofocus required>
+                        </div>
+
+                        <div class="input-group mt-2">
+                            <label for="lastname" class="input-group-text">Apellido Persona</label>
+                            <input class="form-control" type="text" name="lastname" id="lastname" placeholder="Ejemplo: Sanchez Camacho" value="{{persona.lastname}}" autofocus required>
+                        </div>
+
+                        <div class="input-group mt-2">
+                            <label for="age" class="input-group-text">Edad Persona</label>
+                            <input class="form-control" type="number" name="age" id="age" placeholder="Ejemplo: 18" value="{{persona.age}}" autofocus required>
+                        </div>
+
+                        <div class="for-group mt-4 d-grid gap-2">
+                            <button class="btn btn-success">Editar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
