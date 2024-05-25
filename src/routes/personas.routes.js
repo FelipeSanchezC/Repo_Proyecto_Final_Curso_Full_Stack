@@ -1,17 +1,36 @@
 import {Router} from 'express'
 import pool from '../database.js'
+import multer from 'multer';
+import path from 'path';
 
 const router = Router();
+
+const storage = multer.diskStorage({
+    destination: 'src/public/uploads',
+    filename: (req, file, cb) =>{
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        const ext = path.extname(file.originalname)
+        cb(null, file.fieldname + '-' + uniqueSuffix + ext)
+    }
+})
+
+const upload = multer({storage})
 
 router.get('/add', (req, res) =>{
     res.render('personas/add')
 });
 
-router.post('/add' , async(req, res)=>{
+router.post('/add' , upload.single('file'), async(req, res)=>{
     try {
         const {firstname, lastname, age, observacion} = req.body
-        const newPersona = {
-            firstname, lastname, age, observacion
+        let newPersona = {}
+        if(req.file){
+            const file = req.file
+            const imagen_original = file.originalname
+            const imagen = file.filename
+            newPersona = { firstname, lastname, age, observacion, imagen}
+        }else{
+            newPersona = {firstname, lastname, age, observacion}
         }
         await pool.query('INSERT INTO personas SET ?', [newPersona]);
         res.redirect('/list');
@@ -50,11 +69,19 @@ router.get('/edit/:id', async(req, res)=>{
     }
 }); 
 
-router.post('/edit/:id', async(req, res) =>{
+router.post('/edit/:id', upload.single('file'), async(req, res) =>{
     try {
         const {id} = req.params
         const {firstname, lastname, age, observacion} = req.body
-        const editPersona = {firstname, lastname, age, observacion}
+        let editPersona = {}
+        if(req.file){
+            const file = req.file
+            const imagen_original = file.originalname
+            const imagen = file.filename
+            editPersona = { firstname, lastname, age, observacion, imagen}
+        }else{
+            editPersona = {firstname, lastname, age, observacion}
+        }
         await pool.query('UPDATE personas SET ? WHERE id = ?', [editPersona, id]);
         res.redirect('/list')
     } catch (error) {

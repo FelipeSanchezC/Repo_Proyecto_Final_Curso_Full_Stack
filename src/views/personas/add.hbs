@@ -8,7 +8,7 @@
                     </h3>
                 </div>
                 <div class="card-body">
-                    <form action="/add" method="post">
+                    <form action="/add" method="post" enctype="multipart/form-data">
                     <div class="input-group mt-2">
                         <label for="firstname" class="input-group-text">Nombre Persona</label>
                         <input class="form-control" type="text" name="firstname" id="firstname" placeholder="Ejemplo: Juan Felipe" autofocus required>
@@ -27,6 +27,10 @@
                     <div class="input-group mt-2">
                         <label for="observacion" class="input-group-text">Observacion</label>
                         <input class="form-control" type="text" name="observacion" id="observacion" autofocus required>
+                    </div>
+
+                    <div class="input-group mt-2">
+                        <input class="form-control" type="file" name="file" id="file">
                     </div>
 
                     <div class="for-group mt-4 d-grid gap-2">
